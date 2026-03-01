@@ -5,7 +5,13 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'Sriramya', url: 'https://github.com/SriramyaGanni/onlinebookstore.git']])
+                checkout scmGit(
+                    branches: [[name: '*/master']],
+                    userRemoteConfigs: [[
+                        credentialsId: 'Sriramya',
+                        url: 'https://github.com/SriramyaGanni/onlinebookstore.git'
+                    ]]
+                )
             }
         }
 
@@ -17,25 +23,25 @@ pipeline {
 
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t online-bookstore-image .'
+                sh 'docker build -t onlinebookstore-image .'
             }
         }
 
         stage('Run Container') {
             steps {
                 sh '''
-                docker stop online-bookstore-container || true
-                docker rm online-bookstore-container || true
+                docker stop onlinebookstore-container || true
+                docker rm onlinebookstore-container || true
                 docker run -d \
                   -p 8080:8080 \
-                  --name online-bookstore-container \
-                  online-bookstore-image
+                  --name onlinebookstore-container \
+                  onlinebookstore-image
                 '''
             }
         }
