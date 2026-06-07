@@ -243,7 +243,7 @@ ${env.BUILD_URL}
 
     always {
 
-        archiveArtifacts artifacts: '**/target/*.jar',
+        archiveArtifacts artifacts: '**/target/*.war',
         fingerprint: true
       }
    }
