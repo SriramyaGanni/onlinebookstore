@@ -20,7 +20,7 @@ stages {
 
         steps {
 
-            git branch: 'master',
+            git branch: 'main',
             url: 'https://github.com/SriramyaGanni/onlinebookstore.git'
         }
     }
